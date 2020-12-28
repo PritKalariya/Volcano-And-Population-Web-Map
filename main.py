@@ -37,7 +37,10 @@ for lt, ln, el, name in zip(lat, lon, elev, name):
 
     fg.add_child(folium.CircleMarker(location=[lt, ln], radius = 6, popup=folium.Popup(iframe), fill_color = color_generator(el), color = "gray", fill_opacity = 0.7))
 
-fg.add_child(folium.GeoJson(data = open("world.json", "r", encoding = "utf-8-sig").read()))
+fg.add_child(folium.GeoJson(
+    data = open("world.json", "r", encoding = "utf-8-sig").read(),
+    style_function = lambda x: {"fillColor": "green" if x["properties"]["POP2005"] < 10000000 
+    else "yellow" if 10000000 <= x["properties"]["POP2005"] < 20000000 else "red"}))
 
 my_map.add_child(fg)
 
